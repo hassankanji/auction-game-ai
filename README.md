@@ -50,16 +50,41 @@ models/     Trained policy exported to JSON, run in-browser by the web app.
 tests/      Engine correctness tests (pytest).
 ```
 
+## ▶ Play now
+
+**https://hassankanji.github.io/auction-game-ai/** — no install, works on any device. The
+trained bot runs entirely in your browser.
+
+- **Play vs Bots** — full 10-round tournament against four trained bots (Easy → Expert).
+  Toggle a *bot hint* to see what the trained policy would do in your seat, and *reveal all
+  bids* after each round to study play.
+- **Advisor** — playing real people? Enter each round's winner and winning bid; it rebuilds
+  the exact game state and tells you your equilibrium-optimal bid, with reasoning.
+- **Strategy** — a plain-English tour of what strong play looks like.
+
+## What the bots learned (a peek)
+
+Probed at canonical decision points (`python -m analysis.strategy_report`):
+
+| Situation | What the bot does |
+|---|---|
+| R1 opening, nobody qualified | Over-pays face value (~$30m for the $25m project) to lock in qualification |
+| R6, **last** chance to qualify | Bids **$160–190m** for the $350m project — qualification is worth almost anything |
+| R6, already qualified | Bids small / mixes — it doesn't need the round, so it preserves cash |
+| R10 finale, biggest budget | Bids **$320–360m** to seize the $1,000m project |
+| R10 finale, short on cash | Shoves nearly all-in — correct desperation play |
+| R7, first big round, even budgets | Shades low, saving budget for the bigger $750/$900/$1,000 rounds |
+
 ## Status
 
-- [x] Game engine + tests
+- [x] Game engine + tests (12 passing)
 - [x] Heuristic reference bots (random / value / strategic)
-- [ ] Fast vectorised simulator
-- [ ] Self-play RL training pipeline
-- [ ] Strategy analysis + writeup
-- [ ] Web app (play vs bots)
-- [ ] Advisor tool (optimal move vs real opponents)
-- [ ] GitHub Pages deployment
+- [x] Vectorised self-play simulator
+- [x] Self-play RL training pipeline (PPO + fictitious self-play)
+- [x] Strategy analysis + writeup ([`analysis/`](analysis/))
+- [x] Web app (play vs bots)
+- [x] Advisor tool (optimal move vs real opponents)
+- [x] GitHub Pages deployment (auto-deploys on push)
 
 ## Run the engine / tests locally
 

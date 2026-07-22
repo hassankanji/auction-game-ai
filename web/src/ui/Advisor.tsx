@@ -39,8 +39,10 @@ function rationale(state: GameState, mySeat: number, rec: number): string[] {
   // Budget standing among eligible players.
   const rivalsCash = state.cash.filter((_, i) => i !== mySeat && (r < QUALIFY_ROUND_IDX || state.wonAny[i]));
   const maxRival = rivalsCash.length ? Math.max(...rivalsCash) : 0;
-  if (myCash > maxRival) {
+  if (myCash > maxRival + 0.5) {
     notes.push(`You hold the largest budget among live bidders (${fmt1(myCash)} vs ${fmt1(maxRival)}). You can credibly win the most valuable remaining projects — don't overpay early.`);
+  } else if (myCash >= maxRival - 0.5) {
+    notes.push(`Your budget (${fmt1(myCash)}) is level with the top rival (${fmt1(maxRival)}). Whoever preserves cash into the big rounds wins them — don't overpay unless it secures qualification.`);
   } else {
     notes.push(`Your budget (${fmt1(myCash)}) trails the top rival (${fmt1(maxRival)}). Pick your spots; don't get into a bidding war you can't win on the biggest projects.`);
   }

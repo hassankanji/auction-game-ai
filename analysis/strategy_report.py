@@ -50,7 +50,7 @@ def show(title, net, cash, won, proj, r, me):
     ev = RETURNS[r]
     print(f"\n### {title}")
     print(f"    round {r+1} (project ${ev}m), you=seat{me} cash=${cash[me]:.0f}m "
-          f"qualified={bool(won[me])}  value≈{val:+.2f}")
+          f"qualified={bool(won[me])}  value~{val:+.2f}")
     line = "    bid mix: " + "  ".join(f"${b}m:{p*100:4.1f}%" for b, p in top)
     print(line)
 
@@ -59,28 +59,28 @@ def main():
     ckpt = os.path.join(ROOT, "training", "checkpoints", "best.pt")
     net = load(ckpt)
 
-    # 1. Round 1, nobody qualified yet — how much to pay for a cheap qualifying win?
-    show("R1 opening — nobody qualified", net,
+    # 1. Round 1, nobody qualified yet - how much to pay for a cheap qualifying win?
+    show("R1 opening - nobody qualified", net,
          cash=[500]*5, won=[0]*5, proj=[0]*5, r=0, me=0)
 
-    # 2. Round 6, you're the ONLY one not qualified — desperation to qualify.
-    show("R6 — you are the only one not yet qualified", net,
+    # 2. Round 6, you're the ONLY one not qualified - desperation to qualify.
+    show("R6 - you are the only one not yet qualified", net,
          cash=[500, 470, 460, 480, 465], won=[0, 1, 1, 1, 1], proj=[0, 25, 50, 100, 50], r=5, me=0)
 
-    # 3. Round 6, you're already qualified and it's expensive — do you pass?
-    show("R6 — already qualified, preserve cash?", net,
+    # 3. Round 6, you're already qualified and it's expensive - do you pass?
+    show("R6 - already qualified, preserve cash?", net,
          cash=[450]*5, won=[1]*5, proj=[50, 50, 100, 25, 200], r=5, me=0)
 
     # 4. Round 10 ($1000) with a decisive budget lead.
-    show("R10 finale — you hold the biggest budget", net,
+    show("R10 finale - you hold the biggest budget", net,
          cash=[400, 250, 180, 120, 90], won=[1]*5, proj=[300]*5, r=9, me=0)
 
     # 5. Round 10 ($1000), you trail on budget.
-    show("R10 finale — you are short on cash", net,
+    show("R10 finale - you are short on cash", net,
          cash=[90, 400, 350, 300, 250], won=[1]*5, proj=[300]*5, r=9, me=0)
 
     # 6. Round 7 ($500), all qualified, even budgets.
-    show("R7 — first big round, even budgets", net,
+    show("R7 - first big round, even budgets", net,
          cash=[450]*5, won=[1]*5, proj=[80, 60, 100, 40, 120], r=6, me=0)
 
     print("\n(Values are the net's win-share signal for that seat; bid mix is the equilibrium "

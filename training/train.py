@@ -97,7 +97,10 @@ def main():
 
         if (it + 1) % args.eval_every == 0 or it == args.iters - 1:
             ev = evaluate_suite(net, n_games=args.eval_games, seed=args.seed + it)
-            metric = ev["vs_mixed"]
+            # Select the best checkpoint by a STABLE blend that weights the strongest fixed
+            # reference (the strategic heuristic) plus the mixed pool. vs_mixed alone is noisy
+            # (it includes random opponents), which made earlier runs pick lucky peaks.
+            metric = 0.6 * ev["vs_strategic"] + 0.4 * ev["vs_mixed"]
             elapsed = time.time() - t0
             print(f"[{it+1:5d}/{args.iters}] "
                   f"selfplay_win={batch.win_rate_learner:.3f} "
