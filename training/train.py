@@ -126,7 +126,7 @@ def main():
                            os.path.join(CKPT_DIR, "best.pt"))
                 with open(args.out, "w") as f:
                     json.dump(export_weights(net), f)
-                print(f"        new best vs_mixed={metric:.3f} -> exported {args.out}",
+                print(f"        new best blend={metric:.3f} -> exported {args.out}",
                       flush=True)
 
     # Always export final too (in case best == final).

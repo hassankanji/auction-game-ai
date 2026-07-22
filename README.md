@@ -75,6 +75,23 @@ Probed at canonical decision points (`python -m analysis.strategy_report`):
 | R10 finale, short on cash | Shoves nearly all-in — correct desperation play |
 | R7, first big round, even budgets | Shades low, saving budget for the bigger $750/$900/$1,000 rounds |
 
+## Results
+
+The shipped bot (self-play, ~250 iterations, selected by a stable blend of win-share vs the
+strategic heuristic and the mixed pool) — win-share over 800 games each, where **0.20 is
+chance** in a 5-player game:
+
+| Opponent (×4) | Bot win-share |
+|---|---:|
+| Strategic heuristic (best hand-crafted) | **0.98** |
+| Value heuristic | 0.82 |
+| Random | 0.73 |
+| Mixed pool (random/value/strategic) | 0.60 |
+
+It dominates every reference opponent. Training curves: [`analysis/training_curves.png`](analysis/training_curves.png).
+Exploitability (how much a from-scratch best-response can beat it) is measured by
+`python -m analysis.exploitability`; the number is reported in [`analysis/README.md`](analysis/README.md).
+
 ## Status
 
 - [x] Game engine + tests (12 passing)
