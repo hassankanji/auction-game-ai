@@ -18,6 +18,14 @@ training/checkpoints/
 web/node_modules/
 web/dist/
 web/.vite/
+web/*.tsbuildinfo
+web/**/*.tsbuildinfo
+# Generated at build time from /models (single source of truth)
+web/public/policy.json
+web/public/parity_ref.json
+
+# Training run logs
+training/train_out.log
 
 # OS / editor
 .DS_Store
