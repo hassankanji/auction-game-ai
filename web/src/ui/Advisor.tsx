@@ -105,7 +105,7 @@ export function Advisor({ net }: { net: PolicyNet }) {
         <p className="muted" style={{ marginTop: 0 }}>
           Playing real people? Record each round's <b>winner</b> and <b>winning bid</b> as they're
           announced. The advisor rebuilds the exact game state (everyone's cash is derivable from
-          public winning bids) and tells you the equilibrium-optimal bid for <b>your</b> seat.
+          public winning bids) and tells you the trained bot's recommended bid for <b>your</b> seat.
         </p>
         <div className="row">
           <label className="fld">
@@ -160,7 +160,7 @@ export function Advisor({ net }: { net: PolicyNet }) {
               </div>
               <div className="grid" style={{ gridTemplateColumns: "1fr", gap: 12 }}>
                 <div>
-                  <div className="small muted" style={{ marginBottom: 6 }}>Equilibrium bid distribution (mix these to stay unpredictable)</div>
+                  <div className="small muted" style={{ marginBottom: 6 }}>The bot's bid distribution (mix these to stay unpredictable)</div>
                   <BidDistribution rows={decision.distribution} recommended={decision.recommended} cash={state.cash[mySeat]} />
                 </div>
                 <div className="grid" style={{ gap: 6 }}>

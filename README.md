@@ -59,7 +59,7 @@ trained bot runs entirely in your browser.
   Toggle a *bot hint* to see what the trained policy would do in your seat, and *reveal all
   bids* after each round to study play.
 - **Advisor** — playing real people? Enter each round's winner and winning bid; it rebuilds
-  the exact game state and tells you your equilibrium-optimal bid, with reasoning.
+  the exact game state and tells you the trained bot's recommended bid, with reasoning.
 - **Strategy** — a plain-English tour of what strong play looks like.
 
 ## What the bots learned (a peek)
@@ -112,9 +112,16 @@ python -m pytest tests -q
 
 ## How the bots are trained
 
-The flagship bot is trained by **self-play** (each bot plays against copies of itself and a
-population of past checkpoints — *fictitious self-play*), so its strategy is robust rather
-than tuned to beat one specific opponent. Strength is measured by **exploitability**: how
-much a best-response opponent can gain against it. A CFR / game-theory abstraction of the
-game is used to cross-check the learned strategy and to *explain* what strong play looks
-like. See [`analysis/`](analysis/) for the writeup.
+The flagship bot is trained by **self-play with PPO** (each bot plays against copies of itself
+and a rolling pool of frozen past checkpoints — *fictitious self-play*), rewarded primarily by
+the **tournament win-share** so it optimises for *winning*, not raw points. Its strategy is
+robust across opponents rather than tuned to beat one specific bot, and it beats every fixed
+strategy we tested (98% win-share vs the best hand-crafted heuristic).
+
+Strength and honesty are both measured by **exploitability** (`python -m analysis.exploitability`):
+a from-scratch best-response can still beat the bot (~0.88 win-share), so it is *strong but not
+a proven-unexploitable equilibrium* — expected for self-play RL in a 5-player simultaneous-move
+game. A one-pass PSRO robustification (`training/robustify.py`) is included; closing the gap
+fully needs many rounds or a CFR-scale solve (future work). The learned strategy is read out in
+human terms by `python -m analysis.strategy_report`. See [`analysis/`](analysis/) for the full
+writeup.

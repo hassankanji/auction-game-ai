@@ -113,8 +113,8 @@ export function BidDistribution({
         </div>
       ))}
       <div className="tiny muted">
-        Highlighted = single best bid. The bot mixes across these (a Nash-style mixed
-        strategy), so it's unpredictable. Max legal bid: {fmt(maxBidFor(cash))}.
+        Highlighted = single best bid. The bot mixes across these (a mixed strategy), so it's
+        unpredictable. Max legal bid: {fmt(maxBidFor(cash))}.
       </div>
     </div>
   );

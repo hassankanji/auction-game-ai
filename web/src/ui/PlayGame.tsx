@@ -179,7 +179,7 @@ export function PlayGame({ net }: { net: PolicyNet }) {
               <option value="easy">Easy (loose, beatable)</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>
-              <option value="expert">Expert (true equilibrium — top difficulty)</option>
+              <option value="expert">Expert (full-strength trained bot — top difficulty)</option>
             </select>
           </label>
           <div className="spacer" />

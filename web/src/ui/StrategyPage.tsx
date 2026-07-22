@@ -10,9 +10,10 @@ export function StrategyPage() {
         <h2 style={{ margin: "2px 0 0" }}>How the strong bots actually win</h2>
         <p className="muted" style={{ marginTop: 0 }}>
           The bots here were trained by self-play (they played millions of games against
-          copies of themselves and past versions), so their strategy is an approximate Nash
-          equilibrium — robust, not tuned to beat one specific opponent. Here's what that
-          strategy looks like in words.
+          copies of themselves and past versions), so their strategy is robust across many
+          opponents rather than tuned to beat one specific bot — and it beats every fixed
+          strategy we tested. (It's strong, not a proven-unexploitable equilibrium; see the
+          repo's analysis for the honest details.) Here's what that strategy looks like in words.
         </p>
       </div>
 

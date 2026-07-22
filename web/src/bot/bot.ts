@@ -11,15 +11,15 @@ export type Difficulty = "easy" | "medium" | "hard" | "expert";
 
 // In a SEALED-bid simultaneous game the hardest-to-exploit play is the trained mixed
 // strategy at its natural temperature — sharpening it (temp < 1) makes the bot predictable
-// and easy to out-bid by +1. So "expert" plays the true equilibrium (temp 1.0) and the
-// easier levels get progressively softer/noisier (weaker).
+// and easy to out-bid by +1. So "expert" plays the full-strength trained policy (temp 1.0)
+// and the easier levels get progressively softer/noisier (weaker).
 const TEMP: Record<Difficulty, number> = {
   easy: 3.0,
   medium: 1.7,
   hard: 1.15,
   expert: 1.0,
 };
-// Easy/medium blend in uniform noise to be beatable; expert stays pure equilibrium.
+// Easy/medium blend in uniform noise to be beatable; expert stays full-strength.
 const NOISE: Record<Difficulty, number> = {
   easy: 0.4,
   medium: 0.15,

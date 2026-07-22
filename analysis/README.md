@@ -73,7 +73,37 @@ python -m analysis.plot_training
 
 ## Results
 
-See [`../models/train_log.json`](../models/train_log.json) for the full training log and
-`training_curves.png` for the plots. Headline numbers (win-share, where 0.20 is chance in a
-5-player game) and the exploitability gap are printed by the commands above and summarised in
-the top-level [README](../README.md).
+Win-share over 800 games each (0.20 = chance in a 5-player game):
+
+| Opponent (×4) | Bot win-share |
+|---|---:|
+| Strategic heuristic | **0.98** |
+| Value heuristic | 0.82 |
+| Random | 0.73 |
+| Mixed pool | 0.60 |
+
+The bot **dominates every fixed strategy** we could write.
+
+### Honesty about exploitability
+
+A from-scratch **best-response** — a policy trained purely to beat four frozen copies of the
+bot — reaches a win-share of **~0.88** (gap **+0.68** over chance). In other words: the bot is
+excellent against non-adapting opponents, but it is **not an unexploitable equilibrium**. A
+dedicated adversary that studies its fixed strategy can beat it.
+
+This is expected, and worth being clear about:
+
+- Self-play PPO optimises average performance in its own play distribution; it does **not**
+  guarantee a Nash equilibrium. True unexploitability in a 5-player *simultaneous-move* game is
+  genuinely hard (it took poker research years and enormous compute via CFR).
+- A one-pass PSRO/double-oracle robustification (`training/robustify.py`) did not meaningfully
+  close the gap — it needs many rounds. That's the honest state of the art here.
+- **What this means in practice:** a *human* opponent is not a trained best-response. They
+  can't compute one, they face bots that add sampling + off-grid jitter (so the four bots
+  aren't identical), and they only play one seat. So the practical difficulty of beating the
+  Expert bots is high — but a studious player who finds a repeatable hole (e.g. always shove
+  the $1,000m finale when holding a decisive budget lead) can exploit it. Finding those holes
+  is exactly what the Advisor + "reveal all bids" are for.
+
+Reducing exploitability (long PSRO or a CFR solve on an abstracted game) is the natural next
+step. See [`../models/train_log.json`](../models/train_log.json) and `training_curves.png`.
